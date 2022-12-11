@@ -1,7 +1,11 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exception.FacultyNotFoundException;
+import ru.hogwarts.school.exception.StudentNotFoundException;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,37 +15,37 @@ import java.util.stream.Collectors;
 @Service
 public class StudentService {
 
-    private final Map<Long, Student> students = new HashMap<>();
-    private long generateStudentId = 1;
+    private final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     public Collection<Student> getAll() {
-        return students.values();
+        return studentRepository.findAll();
     }
 
     public Student addStudent(Student student) {
-        student.setId(generateStudentId++);
-        students.put(student.getId(), student);
-        return student;
+        return studentRepository.save(student);
     }
 
     public Student findStudent(Long studentId) {
-        return students.get(studentId);
+        return studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
     }
 
-    public Student editStudent(Student student) {
-        if (!students.containsKey(student.getId())) {
-            return null;
-        }
-        students.put(student.getId(), student);
-        return student;
+    public Student editStudent(Long id, Student student) {
+        Student foundStudent = studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
+        foundStudent.setAge(student.getAge());
+        foundStudent.setName(student.getName());
+        return studentRepository.save(foundStudent);
     }
 
-    public Student deleteStudent(Long studentId) {
-        return students.remove(studentId);
+    public void deleteStudent(Long studentId) {
+        studentRepository.deleteById(studentId);
     }
 
     public Collection<Student> getStudentsByAge(int age) {
-        return students.values()
+        return studentRepository.findAll()
                 .stream()
                 .filter(e -> e.getAge() == age)
                 .collect(Collectors.toList());
