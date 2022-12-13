@@ -34,8 +34,15 @@ public class FacultyController {
     }
 
     @GetMapping("/all")
-    public Collection<Faculty> getAllFaculty() {
-        return facultyService.getAll();
+    public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String name,
+                                        @RequestParam(required = false) String color) {
+        if (name != null && !name.isBlank()) {
+            return ResponseEntity.ok(facultyService.findFacultyByName(name));
+        }
+        if (color != null && !color.isBlank()) {
+            return ResponseEntity.ok(facultyService.findFacultiesByColor(color));
+        }
+        return ResponseEntity.ok(facultyService.getAll());
     }
 
     @PutMapping("/{id}")
@@ -56,5 +63,10 @@ public class FacultyController {
             return ResponseEntity.ok(facultyService.getFacultiesByColor(color));
         }
         return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/StudentsList")
+    public Collection<Student> getFacultyStudents(@RequestParam("facultyId") Long id) {
+        return facultyService.findFaclultyStudents(id);
     }
 }

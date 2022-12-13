@@ -51,7 +51,7 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public Collection<Student> findByAgeBetween(int age, int age2) {
+    public Collection<Student> findByAgeBetween(Integer age, Integer age2) {
         return studentRepository.findStudentsByAgeBetween(age, age2);
     }
 }

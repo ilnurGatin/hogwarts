@@ -33,9 +33,9 @@ public class StudentController {
     }
 
     @GetMapping("/all")
-    public Collection<Student> findAllStudents(@RequestParam(required = false) int age,
-                                               @RequestParam(required = false) int age2) {
-        if (age > 0 && age2 > 0) {
+    public Collection<Student> findAllStudents(@RequestParam(required = false) Integer age,
+                                               @RequestParam(required = false) Integer age2) {
+        if (age != null && age2 != null && age > 0 && age2 > age) {
             return studentService.findByAgeBetween(age, age2);
         }
         return studentService.getAll();
