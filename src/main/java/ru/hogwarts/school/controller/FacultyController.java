@@ -64,9 +64,4 @@ public class FacultyController {
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
-
-    @GetMapping("/StudentsList")
-    public Collection<Student> getFacultyStudents(@RequestParam("facultyId") Long id) {
-        return facultyService.findFaclultyStudents(id);
-    }
 }

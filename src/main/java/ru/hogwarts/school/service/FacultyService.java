@@ -59,7 +59,4 @@ public class FacultyService {
         return facultyRepository.findFacultiesByColorIgnoreCase(color);
     }
 
-    public Collection<Student> findFaclultyStudents(Long id) {
-        return facultyRepository.findStudentsInFaculty(id);
-    }
 }
