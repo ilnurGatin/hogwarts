@@ -1,7 +1,9 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.StudentNotFoundException;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
@@ -49,5 +51,9 @@ public class StudentService {
 
     public Collection<Student> findByAgeBetween(Integer age, Integer age2) {
         return studentRepository.findStudentsByAgeBetween(age, age2);
+    }
+
+    public Faculty getStudentsFaculty(Long id) {
+        return studentRepository.findById(id).orElseThrow(StudentNotFoundException::new).getFaculty();
     }
 }

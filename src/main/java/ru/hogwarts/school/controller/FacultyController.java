@@ -33,6 +33,11 @@ public class FacultyController {
         return ResponseEntity.ok(foundFaculty);
     }
 
+    @GetMapping("/{facultyId}/Students")
+    public ResponseEntity<Collection<Student>> getFacultyStudents(@PathVariable("facultyId") Long id) {
+        return ResponseEntity.ok(facultyService.getFacultyStudents(id));
+    }
+
     @GetMapping("/all")
     public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String name,
                                         @RequestParam(required = false) String color) {

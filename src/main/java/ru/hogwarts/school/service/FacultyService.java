@@ -59,4 +59,7 @@ public class FacultyService {
         return facultyRepository.findFacultiesByColorIgnoreCase(color);
     }
 
+    public Collection<Student> getFacultyStudents(Long id) {
+        return facultyRepository.findById(id).orElseThrow(FacultyNotFoundException::new).getStudents();
+    }
 }

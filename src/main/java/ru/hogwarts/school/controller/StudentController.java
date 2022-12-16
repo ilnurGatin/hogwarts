@@ -2,10 +2,10 @@ package ru.hogwarts.school.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
-import javax.websocket.server.PathParam;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -30,6 +30,11 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(foundStudent);
+    }
+
+    @GetMapping("/{id}/faculty")
+    public ResponseEntity<Faculty> getStudentsFaculty(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(studentService.getStudentsFaculty(id));
     }
 
     @GetMapping("/all")
