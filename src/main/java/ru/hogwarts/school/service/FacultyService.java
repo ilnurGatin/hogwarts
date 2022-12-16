@@ -8,8 +8,7 @@ import ru.hogwarts.school.repository.FacultyRepository;
 
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,7 +58,7 @@ public class FacultyService {
         return facultyRepository.findFacultiesByColorIgnoreCase(color);
     }
 
-    public Collection<Student> getFacultyStudents(Long id) {
+    public Set<Student> getFacultyStudents(Long id) {
         return facultyRepository.findById(id).orElseThrow(FacultyNotFoundException::new).getStudents();
     }
 }
