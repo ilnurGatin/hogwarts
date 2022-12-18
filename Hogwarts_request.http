@@ -1,0 +1,20 @@
+### Создаем факультет
+POST http://localhost:8080/faculty
+Content-Type: application/json
+
+{
+  "name": "FacultyFaculty",
+  "color": "white"
+}
+
+### Создаем студента
+POST http://localhost:8080/student
+Content-Type: application/json
+
+{
+  "name": "Tester4",
+  "age": 22,
+  "faculty": {
+    "id": 24
+  }
+}
