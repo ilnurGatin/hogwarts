@@ -17,6 +17,11 @@ public class Student {
     @JsonBackReference
     private Faculty faculty;
 
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
     public Faculty getFaculty() {
         return faculty;
     }
