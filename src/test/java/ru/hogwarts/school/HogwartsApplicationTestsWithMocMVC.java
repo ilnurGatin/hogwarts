@@ -135,7 +135,7 @@ public class HogwartsApplicationTestsWithMocMVC {
         String newColor = "Black";
 
         JSONObject facultyObj = new JSONObject();
-        facultyObj.put("id", id)
+        facultyObj.put("id", id);
         facultyObj.put("name", newName);
         facultyObj.put("color", newColor);
 
