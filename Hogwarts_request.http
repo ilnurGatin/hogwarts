@@ -18,3 +18,6 @@ Content-Type: application/json
     "id": 24
   }
 }
+
+### Посчитать количество студентов
+GET http://localhost:8080/student/all/count
