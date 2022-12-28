@@ -21,6 +21,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.OptionalDouble;
 
 @RestController
 @RequestMapping("/student")
@@ -70,6 +72,16 @@ public class StudentController {
     @GetMapping("/all/avg-age")
     public Integer findAverageAge() {
         return studentService.findAverageAge();
+    }
+
+    @GetMapping("/all/avg-age-stream")
+    public OptionalDouble findAverageAgeWithStream() {
+        return studentService.findAverageAgeWithStream();
+    }
+
+    @GetMapping("/all/student-name-char")
+    public List<String> findStudentsWithNamesStartingOnA() {
+        return studentService.findStudentsWithNamesStartingOnA();
     }
 
     @GetMapping("/all/limit")

@@ -16,7 +16,11 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -127,4 +131,18 @@ public class StudentService {
     public Collection<Student> getLastFiveStudents() {
         return studentRepository.getLastFiveStudents();
     }
+
+    public OptionalDouble findAverageAgeWithStream() {
+        OptionalDouble averageAge = studentRepository.findAll()
+                .stream()
+                .mapToInt(e -> e.getAge())
+                .average();
+        return averageAge;
+    }
+
+    public List<String> findStudentsWithNamesStartingOnA() {
+        List<String> names = studentRepository.findAll().stream().map(Student::getName).toList();
+        return names.stream().filter(e ->e.charAt(0) == 'A').collect(Collectors.toList());
+    }
+
 }

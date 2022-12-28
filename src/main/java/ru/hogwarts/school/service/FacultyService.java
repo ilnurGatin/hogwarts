@@ -9,8 +9,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,5 +72,20 @@ public class FacultyService {
     public Set<Student> getFacultyStudents(Long id) {
         logger.info("Was invoked method for searching a faculty's students");
         return facultyRepository.findById(id).orElseThrow(FacultyNotFoundException::new).getStudents();
+    }
+
+    public Optional<Map.Entry<Integer, List<String>>> findLongestFacultyName() {
+        List<String> names = facultyRepository.findAll()
+                .stream()
+                .map(Faculty::getName)
+                .toList();
+
+        Optional<Map.Entry<Integer, List<String>>> max = names.stream()
+                .collect(Collectors.groupingBy(String::length))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByKey());
+
+        return max;
     }
 }
