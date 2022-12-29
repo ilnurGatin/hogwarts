@@ -27,6 +27,10 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 public class StudentService {
 
+    int count;
+
+    public Object flag = new Object();
+
     @Value("${avatars.dir.path}")
     private String avatarsDir;
 
@@ -39,6 +43,7 @@ public class StudentService {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
     }
+
 
     public Collection<Student> getAll() {
         logger.info("Was invoked method for get all students");
@@ -141,8 +146,73 @@ public class StudentService {
     }
 
     public List<String> findStudentsWithNamesStartingOnA() {
-        List<String> names = studentRepository.findAll().stream().map(Student::getName).toList();
+        List<String> names = getAllNames();
         return names.stream().filter(e ->e.charAt(0) == 'A').collect(Collectors.toList());
     }
 
+
+
+    public void printNames(int index) {
+        List<String> names = getAllNames();
+        System.out.println(names.get(index));
+        count++;
+    }
+
+    public List<String> getAllNames() {
+        return studentRepository.findAll().stream().map(Student::getName).toList();
+    }
+
+    public void printOperations() {
+        printNames(0);
+        printNames(1);
+
+        new Thread(() -> {
+            printNames(2);
+            printNames(3);
+        }).start();
+
+        new Thread(() -> {
+            printNames(4);
+            printNames(5);
+        }).start();
+
+    }
+// Не уверен, что именно это нужно было реализовать. В методе printOperationInOrder общая куча имен, где каждый поток берет следующее имя и выводит на печать
+    public void printOperationInOrder() {
+        printNames(count);
+        printNames(count);
+
+        new Thread(() -> {
+            printNames(count);
+            printNames(count);
+        }).start();
+
+        new Thread(() -> {
+            printNames(count);
+            printNames(count);
+        }).start();
+    }
+
+    public void printNamesSynchro(int index) {
+        synchronized (flag) {
+            List<String> names = getAllNames();
+            System.out.println(names.get(index));
+        }
+
+    }
+
+    public void printNamesSynchronized() {
+        printNamesSynchro(0);
+        printNamesSynchro(1);
+
+        new Thread(() -> {
+            printNamesSynchro(2);
+            printNamesSynchro(3);
+        }).start();
+
+        new Thread(() -> {
+            printNamesSynchro(4);
+            printNamesSynchro(5);
+        }).start();
+    }
 }
