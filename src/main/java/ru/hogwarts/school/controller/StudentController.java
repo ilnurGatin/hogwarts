@@ -89,6 +89,21 @@ public class StudentController {
         return studentService.getLastFiveStudents();
     }
 
+    @GetMapping("all/print-names")
+    public void printNames() {
+        studentService.printOperations();
+    }
+
+    @GetMapping("/all/print-names/inorder")
+    public void printNamesInOrder() {
+        studentService.printOperationInOrder();
+    }
+
+    @GetMapping("/all/print-names/synchronized")
+    public void printNamesSynchronized() {
+        studentService.printNamesSynchronized();
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable("id") Long id, @RequestBody Student student) {
         Student updatedStudent = studentService.editStudent(id, student);
